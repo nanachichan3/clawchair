@@ -8,12 +8,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,688 +17,739 @@
       --neon-cyan: #00f0ff;
       --neon-magenta: #ff00ff;
       --neon-purple: #a855f7;
+      --dark-bg: #030508;
     }
     
     html { scroll-behavior: smooth; }
     
     body {
-      font-family: 'Inter', sans-serif;
-      background: #0a0a0f;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark-bg);
       color: #fff;
       overflow-x: hidden;
+      line-height: 1.6;
     }
     
-    .font-orbitron { font-family: 'Orbitron', sans-serif; }
+    h1, h2, h3, h4 { line-height: 1.2; }
     
-    .glass {
-      background: rgba(10, 10, 20, 0.7);
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      transition: all 0.3s ease;
+    }
+    
+    nav.scrolled {
+      background: rgba(3, 5, 8, 0.95);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     
-    .gradient-text {
-      background: linear-gradient(135deg, #00f0ff 0%, #a855f7 50%, #ff00ff 100%);
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #000;
+    }
+    
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    
+    .logo-text span { color: var(--neon-cyan); }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+    }
+    
+    nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s;
+      letter-spacing: 0.03em;
+    }
+    
+    nav a:hover { color: var(--neon-cyan); }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 100%);
+      color: #000;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(0, 240, 255, 0.3);
+    }
+    
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 240, 255, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--neon-cyan);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--neon-cyan);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     
-    .btn-primary {
-      background: linear-gradient(135deg, #00f0ff 0%, #a855f7 100%);
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
+    .hero p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .hero-stat h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      margin-bottom: 4px;
+    }
+    
+    .hero-stat span {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.1em;
     }
     
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+    .hero-image {
+      position: relative;
     }
     
-    .btn-secondary {
-      background: transparent;
-      padding: 1rem 2rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      border: 2px solid #ff00ff;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #ff00ff;
-    }
-    
-    .btn-secondary:hover {
-      background: rgba(255, 0, 255, 0.1);
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
-    }
-    
-    .bg-grid {
-      background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-    
-    @keyframes pulse-slow {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-    
-    .animate-float { animation: float 6s ease-in-out infinite; }
-    .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
-    
-    .section-padding { padding: 6rem 2rem; }
-    
-    .card-hover {
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    
-    .card-hover:hover {
-      transform: translateY(-10px) scale(1.02);
-    }
-    
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0a0a0f; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #00f0ff, #ff00ff);
-      border-radius: 4px;
-    }
-    
-    #three-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
+    .hero-image img {
       width: 100%;
-      height: 100%;
-      z-index: -1;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    }
+    
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+    
+    /* FEATURES */
+    .features {
+      padding: 120px 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(168, 85, 247, 0.03) 50%, transparent 100%);
+    }
+    
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 64px;
+    }
+    
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--neon-magenta);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+    
+    .section-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .section-header p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .feature-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.4s ease;
+    }
+    
+    .feature-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(0, 240, 255, 0.2);
+      transform: translateY(-4px);
+    }
+    
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .feature-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+    
+    /* SPECS */
+    .specs {
+      padding: 120px 0;
+    }
+    
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+    
+    .spec-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    
+    .spec-card h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    
+    .spec-item:last-child { border-bottom: none; }
+    
+    .spec-item span:first-child {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+    
+    .spec-item span:last-child {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    /* PRICING */
+    .pricing {
+      padding: 120px 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.1) 0%, transparent 60%);
+    }
+    
+    .pricing-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      border-radius: 24px;
+      padding: 64px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .price-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+    
+    .price-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    
+    .price-old {
+      font-size: 24px;
+      color: rgba(255,255,255,0.3);
+      text-decoration: line-through;
+      margin-bottom: 24px;
+    }
+    
+    .price-features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin: 32px 0;
+    }
+    
+    .price-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .price-feature::before {
+      content: '✓';
+      color: var(--neon-cyan);
+      font-weight: bold;
+    }
+    
+    /* CTA */
+    .cta {
+      padding: 120px 0;
+      text-align: center;
+    }
+    
+    .cta-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 40px auto 0;
+    }
+    
+    .cta-form input {
+      flex: 1;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    .cta-form input::placeholder { color: rgba(255,255,255,0.3); }
+    
+    .cta-form input:focus {
+      border-color: var(--neon-cyan);
+    }
+    
+    /* FOOTER */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    footer p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+    
+    /* LIFESTYLE */
+    .lifestyle {
+      padding: 0 0 120px;
+      text-align: center;
+    }
+    
+    .lifestyle img {
+      max-width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .hero h1 { font-size: 42px; }
+      .hero-image { order: -1; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .specs-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .hero h1 { font-size: 32px; }
+      .hero-stats { flex-direction: column; gap: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .specs-grid { grid-template-columns: 1fr; }
+      .cta-form { flex-direction: column; }
+      .pricing-card { padding: 40px 24px; }
+      .price-value { font-size: 48px; }
     }
   </style>
 </head>
 <body>
-  <div id="root"></div>
-  
-  <script type="text/babel">
-    const { useState, useEffect, useRef, Suspense } = React;
-    
-    // ============ 3D CHAIR COMPONENT ============
-    function Chair3D() {
-      const canvasRef = useRef(null);
-      const sceneRef = useRef(null);
-      
-      useEffect(() => {
-        if (!canvasRef.current) return;
-        
-        // Scene setup
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        canvasRef.current.appendChild(renderer.domElement);
-        
-        sceneRef.current = { scene, camera, renderer };
-        
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
-        scene.add(ambientLight);
-        
-        const spotLight = new THREE.SpotLight(0xffffff, 1);
-        spotLight.position.set(10, 10, 10);
-        scene.add(spotLight);
-        
-        const cyanLight = new THREE.PointLight(0x00f0ff, 0.8);
-        cyanLight.position.set(-5, 5, -5);
-        scene.add(cyanLight);
-        
-        const magentaLight = new THREE.PointLight(0xff00ff, 0.5);
-        magentaLight.position.set(5, -5, 5);
-        scene.add(magentaLight);
-        
-        // Materials
-        const darkMaterial = new THREE.MeshStandardMaterial({ 
-          color: 0x1a1a2e, 
-          metalness: 0.8, 
-          roughness: 0.2 
-        });
-        
-        const cushionMaterial = new THREE.MeshStandardMaterial({ 
-          color: 0x2d2d44, 
-          metalness: 0.3, 
-          roughness: 0.7 
-        });
-        
-        const neonCyanMaterial = new THREE.MeshStandardMaterial({ 
-          color: 0x00f0ff, 
-          emissive: 0x00f0ff, 
-          emissiveIntensity: 2 
-        });
-        
-        const neonMagentaMaterial = new THREE.MeshStandardMaterial({ 
-          color: 0xff00ff, 
-          emissive: 0xff00ff, 
-          emissiveIntensity: 2 
-        });
-        
-        // Chair group
-        const chairGroup = new THREE.Group();
-        
-        // Main seat
-        const seatGeo = new THREE.BoxGeometry(1.5, 0.3, 1.2);
-        const seat = new THREE.Mesh(seatGeo, darkMaterial);
-        seat.position.y = 0.8;
-        chairGroup.add(seat);
-        
-        // Seat cushion
-        const cushionGeo = new THREE.BoxGeometry(1.3, 0.15, 1);
-        const cushion = new THREE.Mesh(cushionGeo, cushionMaterial);
-        cushion.position.y = 1;
-        chairGroup.add(cushion);
-        
-        // Back rest
-        const backGeo = new THREE.BoxGeometry(1.4, 1.4, 0.2);
-        const back = new THREE.Mesh(backGeo, darkMaterial);
-        back.position.set(0, 1.6, -0.4);
-        back.rotation.x = -0.15;
-        chairGroup.add(back);
-        
-        // Headrest
-        const headGeo = new THREE.BoxGeometry(0.8, 0.5, 0.2);
-        const head = new THREE.Mesh(headGeo, cushionMaterial);
-        head.position.set(0, 2.4, -0.3);
-        head.rotation.x = -0.2;
-        chairGroup.add(head);
-        
-        // Armrests
-        const armGeo = new THREE.BoxGeometry(0.15, 0.5, 0.8);
-        const leftArm = new THREE.Mesh(armGeo, darkMaterial);
-        leftArm.position.set(-0.85, 1.1, 0);
-        chairGroup.add(leftArm);
-        
-        const rightArm = new THREE.Mesh(armGeo, darkMaterial);
-        rightArm.position.set(0.85, 1.1, 0);
-        chairGroup.add(rightArm);
-        
-        // Base
-        const baseGeo = new THREE.CylinderGeometry(0.4, 0.5, 0.4, 32);
-        const base = new THREE.Mesh(baseGeo, darkMaterial);
-        base.position.y = 0.2;
-        chairGroup.add(base);
-        
-        // Base ring (glowing)
-        const ringGeo = new THREE.TorusGeometry(0.5, 0.03, 16, 100);
-        const ring = new THREE.Mesh(ringGeo, neonCyanMaterial);
-        ring.position.y = 0.05;
-        ring.rotation.x = Math.PI / 2;
-        chairGroup.add(ring);
-        
-        // PC Unit
-        const pcGeo = new THREE.BoxGeometry(1.2, 0.8, 0.15);
-        const pc = new THREE.Mesh(pcGeo, new THREE.MeshStandardMaterial({ color: 0x0a0a15, metalness: 0.95, roughness: 0.05 }));
-        pc.position.set(0, 1.3, -0.5);
-        chairGroup.add(pc);
-        
-        // Screen on PC
-        const screenGeo = new THREE.PlaneGeometry(1, 0.5);
-        const screenMat = new THREE.MeshStandardMaterial({ color: 0x001a1a, emissive: 0x00f0ff, emissiveIntensity: 0.5 });
-        const screen = new THREE.Mesh(screenGeo, screenMat);
-        screen.position.set(0, 1.35, -0.41);
-        chairGroup.add(screen);
-        
-        // Massage nodes (left)
-        const nodeGeo = new THREE.SphereGeometry(0.08, 16, 16);
-        [-0.5, -0.3, -0.1].forEach((y, i) => {
-          const node = new THREE.Mesh(nodeGeo, neonMagentaMaterial);
-          node.position.set(-0.5, 1.2 + y, -0.25);
-          chairGroup.add(node);
-        });
-        
-        // Massage nodes (right)
-        [-0.5, -0.3, -0.1].forEach((y, i) => {
-          const node = new THREE.Mesh(nodeGeo, neonCyanMaterial);
-          node.position.set(0.5, 1.2 + y, -0.25);
-          chairGroup.add(node);
-        });
-        
-        // Neon strips
-        const stripGeo = new THREE.BoxGeometry(1.4, 0.02, 0.02);
-        const cyanStrip = new THREE.Mesh(stripGeo, neonCyanMaterial);
-        cyanStrip.position.set(0, 0.95, 0.6);
-        chairGroup.add(cyanStrip);
-        
-        const magentaStrip = new THREE.Mesh(stripGeo, neonMagentaMaterial);
-        magentaStrip.position.set(0, 0.95, -0.6);
-        chairGroup.add(magentaStrip);
-        
-        scene.add(chairGroup);
-        
-        // Camera position
-        camera.position.set(3, 2, 5);
-        camera.lookAt(0, 1, 0);
-        
-        // Mouse interaction
-        let mouseX = 0, mouseY = 0;
-        const handleMouseMove = (e) => {
-          mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-          mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-        };
-        document.addEventListener('mousemove', handleMouseMove);
-        
-        // Animation
-        let time = 0;
-        const animate = () => {
-          requestAnimationFrame(animate);
-          time += 0.01;
-          
-          chairGroup.rotation.y += 0.003;
-          chairGroup.position.y = Math.sin(time) * 0.1;
-          
-          chairGroup.rotation.x = mouseY * 0.1;
-          chairGroup.rotation.z = mouseX * 0.05;
-          
-          renderer.render(scene, camera);
-        };
-        animate();
-        
-        // Resize handler
-        const handleResize = () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-        window.addEventListener('resize', handleResize);
-        
-        return () => {
-          document.removeEventListener('mousemove', handleMouseMove);
-          window.removeEventListener('resize', handleResize);
-          renderer.dispose();
-          if (canvasRef.current) {
-            canvasRef.current.removeChild(renderer.domElement);
-          }
-        };
-      }, []);
-      
-      return <div ref={canvasRef} id="three-canvas" />;
-    }
-    
-    // ============ NAVBAR ============
-    function Navbar() {
-      const [scrolled, setScrolled] = useState(false);
-      
-      useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, []);
-      
-      return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-5'}`}>
-          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-            <a href="#" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-neon-cyan to-neon-magenta flex items-center justify-center">
-                <span className="font-orbitron font-bold text-black text-lg">C</span>
-              </div>
-              <span className="font-orbitron text-xl font-bold tracking-wider">
-                CLAW<span className="text-[#00f0ff]">CHAIR</span>
-              </span>
-            </a>
-            <div className="hidden md:flex items-center gap-8">
-              {['Features', 'Specs', 'AI', 'Order'].map(link => (
-                <a key={link} href={`#${link.toLowerCase()}`} className="text-gray-300 hover:text-[#00f0ff] transition-colors font-medium">
-                  {link}
-                </a>
-              ))}
-            </div>
-            <button className="btn-primary text-sm hidden md:block">Pre-Order Now</button>
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="container">
+      <a href="#" class="logo">
+        <div class="logo-icon">C</div>
+        <span class="logo-text">CLAW<span>CHAIR</span></span>
+      </a>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#specs">Specs</a></li>
+        <li><a href="#pricing">Price</a></li>
+      </ul>
+      <a href="#order" class="btn-primary">Pre-Order</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">The Future is Here</div>
+          <h1>Welcome to<br/><span class="gradient">The Matrix</span><br/>Lifestyle</h1>
+          <p>Sit. Sleep. Eat. Work. Live your entire life without leaving your chair. The ultimate life pod combining massage therapy, robotics, and an AI-powered PC.</p>
+          <div class="hero-cta">
+            <a href="#order" class="btn-primary">Pre-Order for $4,999</a>
           </div>
-        </nav>
-      );
-    }
-    
-    // ============ HERO ============
-    function Hero() {
-      return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00f0ff]/10 rounded-full blur-3xl animate-float"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#ff00ff]/10 rounded-full blur-3xl animate-float" style={{animationDelay: '-3s'}}></div>
-          </div>
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-              <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse"></span>
-              <span className="text-sm text-gray-300 font-medium">The Future of Human-Computer Interaction</span>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <h3>24/7</h3>
+              <span>AI Operation</span>
             </div>
-            
-            <h1 className="font-orbitron text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="text-white">Welcome to</span><br />
-              <span className="gradient-text">The Matrix</span><br />
-              <span className="text-white">Lifestyle</span>
-            </h1>
-            
-            <p className="text-xl text-gray-400 mb-8 max-w-xl mx-auto">
-              Sit. Sleep. Eat. Work. <span className="text-[#00f0ff] font-semibold">Live your entire life</span> without leaving your chair. 
-              The ultimate life pod combining massage therapy, robotics, and an AI-powered PC.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-primary text-lg px-8 py-4 animate-pulse-slow">
-                Pre-Order for $4,999
-              </button>
-              <button className="btn-secondary text-lg px-8 py-4">
-                Watch Demo
-              </button>
+            <div class="hero-stat">
+              <h3>0m²</h3>
+              <span>Living Space</span>
             </div>
-            
-            <div className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-white/10 max-w-lg mx-auto">
-              <div>
-                <div className="font-orbitron text-3xl font-bold text-[#00f0ff]">24/7</div>
-                <div className="text-sm text-gray-500">AI Operation</div>
-              </div>
-              <div>
-                <div className="font-orbitron text-3xl font-bold text-[#ff00ff]">0m²</div>
-                <div className="text-sm text-gray-500">Living Space</div>
-              </div>
-              <div>
-                <div className="font-orbitron text-3xl font-bold text-[#a855f7]">∞</div>
-                <div className="text-sm text-gray-500">Productivity</div>
-              </div>
+            <div class="hero-stat">
+              <h3>∞</h3>
+              <span>Productivity</span>
             </div>
           </div>
-          
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
-            <span className="text-xs text-gray-500 tracking-widest">SCROLL</span>
-            <div className="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-2">
-              <div className="w-1 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-    
-    // ============ FEATURES ============
-    const features = [
-      { icon: '🖥️', title: 'Triple Display System', desc: 'Three high-resolution screens for immersive multitasking.', color: 'cyan' },
-      { icon: '🧠', title: 'AI-Native Platform', desc: 'OpenClaw pre-installed. Run local LLMs and orchestrate agents.', color: 'purple' },
-      { icon: '💆', title: 'Medical-Grade Massage', desc: 'Professional shiatsu, deep tissue, AI-adaptive massage.', color: 'magenta' },
-      { icon: '⚡', title: 'Self-Powered Mobility', desc: 'Quiet electric drive. Move between rooms without leaving.', color: 'cyan' },
-      { icon: '🌙', title: 'Sleep Optimization', desc: 'Flat-bed conversion with temperature control and aromatherapy.', color: 'purple' },
-      { icon: '🔒', title: 'Fort Knox Security', desc: 'Hardware encryption, biometric lock, air-gapped AI.', color: 'magenta' },
-    ];
-    
-    function Features() {
-      const colorMap = {
-        cyan: 'border-[#00f0ff]/30 hover:border-[#00f0ff]/60',
-        magenta: 'border-[#ff00ff]/30 hover:border-[#ff00ff]/60',
-        purple: 'border-[#a855f7]/30 hover:border-[#a855f7]/60'
-      };
-      
-      const iconMap = {
-        cyan: 'text-[#00f0ff]',
-        magenta: 'text-[#ff00ff]',
-        purple: 'text-[#a855f7]'
-      };
-      
-      return (
-        <section id="features" className="section-padding relative">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-[#00f0ff] font-orbitron text-sm tracking-widest mb-4 block">FEATURES</span>
-              <h2 className="font-orbitron text-4xl md:text-5xl font-bold mb-6">
-                Why Choose <span className="gradient-text">ClawChair</span>?
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                It's not just a chair. It's a complete life transformation.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((f, i) => (
-                <div key={i} className={`glass rounded-2xl p-8 border ${colorMap[f.color]} card-hover`}>
-                  <div className={`${iconMap[f.color]} text-4xl mb-4`}>{f.icon}</div>
-                  <h3 className="font-orbitron text-xl font-bold mb-3">{f.title}</h3>
-                  <p className="text-gray-400">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-    
-    // ============ SPECS ============
-    function Specs() {
-      return (
-        <section id="specs" className="section-padding relative bg-gradient-to-b from-transparent via-[#a855f7]/5 to-transparent">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-[#ff00ff] font-orbitron text-sm tracking-widest mb-4 block">SPECIFICATIONS</span>
-              <h2 className="font-orbitron text-4xl md:text-5xl font-bold mb-6">
-                Beast Mode <span className="gradient-text">Unleashed</span>
-              </h2>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                { title: 'Computing', items: [['CPU', 'AMD Ryzen 9 9950X'], ['GPU', 'NVIDIA RTX 5090'], ['RAM', '256GB DDR6'], ['Storage', '8TB NVMe Gen5']] },
-                { title: 'Display', items: [['Main Screen', '32" 8K OLED'], ['Side Screens', '2x 15" Touch OLED'], ['Refresh Rate', '240Hz']] },
-                { title: 'Massage', items: [['Rollers', '4D Shiatsu Array'], ['Airbags', '36 Air Cell System'], ['Programs', '50+ Auto Programs']] },
-              ].map((cat, i) => (
-                <div key={i} className="glass rounded-2xl p-6 border border-white/10">
-                  <h3 className="font-orbitron text-lg font-bold mb-4 text-[#00f0ff]">{cat.title}</h3>
-                  <div className="space-y-3">
-                    {cat.items.map(([name, val], j) => (
-                      <div key={j} className="flex justify-between">
-                        <span className="text-gray-500 text-sm">{name}</span>
-                        <span className="text-white text-sm">{val}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            <div className="mt-16 text-center">
-              <div className="glass rounded-3xl p-8 md:p-12 border border-[#a855f7]/30 max-w-4xl mx-auto">
-                <span className="text-gray-400 text-sm tracking-widest mb-4 block">STARTING FROM</span>
-                <div className="flex items-baseline justify-center gap-2 mb-4">
-                  <span className="font-orbitron text-5xl md:text-7xl font-black gradient-text">$4,999</span>
-                  <span className="text-gray-500 line-through text-xl">$7,999</span>
-                </div>
-                <p className="text-gray-400 mb-6">Early Bird Special • Limited Quantities • Free Lifetime AI Updates</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-    
-    // ============ AI SECTION ============
-    function AIIntegration() {
-      const agents = [
-        { emoji: '🔬', name: 'Research Agent', status: 'active', task: 'Researching: Self-Degree Framework' },
-        { emoji: '⚡', name: 'Code Agent', status: 'active', task: 'Building: ClawChair landing page' },
-        { emoji: '✍️', name: 'Content Agent', status: 'idle', task: 'Idle' },
-        { emoji: '📈', name: 'Trading Agent', status: 'active', task: 'Monitoring: BTC/USD' },
-      ];
-      
-      return (
-        <section id="ai" className="section-padding relative">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-[#a855f7] font-orbitron text-sm tracking-widest mb-4 block">AI INTEGRATION</span>
-              <h2 className="font-orbitron text-4xl md:text-5xl font-bold mb-6">
-                Your AI <span className="gradient-text">Army</span> Always Online
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Powered by OpenClaw. Multiple specialized agents work 24/7 on your behalf.
-              </p>
-            </div>
-            
-            <div className="glass rounded-3xl border border-white/10 p-6">
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                  <span className="font-orbitron text-sm text-[#00f0ff]">SYSTEM ONLINE</span>
-                </div>
-                <div className="text-right">
-                  <div className="text-xs text-gray-500">Total Tasks Today</div>
-                  <div className="font-orbitron text-[#ff00ff]">247</div>
-                </div>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                {agents.map((agent, i) => (
-                  <div key={i} className="p-4 rounded-xl border border-white/10 bg-white/5 hover:border-[#00f0ff]/30 transition-all">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{agent.emoji}</span>
-                        <div>
-                          <h4 className="font-medium">{agent.name}</h4>
-                        </div>
-                      </div>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        agent.status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
-                      }`}>
-                        {agent.status}
-                      </span>
-                    </div>
-                    <div className="text-xs text-gray-400 truncate">{agent.task}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-    
-    // ============ CTA ============
-    function CTA() {
-      const [email, setEmail] = useState('');
-      const [submitted, setSubmitted] = useState(false);
-      
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        if (email) {
-          setSubmitted(true);
-          setTimeout(() => { setSubmitted(false); setEmail(''); }, 3000);
-        }
-      };
-      
-      return (
-        <section id="order" className="section-padding relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="relative mb-16">
-              <div className="absolute inset-0 -z-10">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-[#00f0ff]/20 via-[#a855f7]/20 to-[#ff00ff]/20 rounded-full blur-3xl"></div>
-              </div>
-              
-              <h2 className="font-orbitron text-4xl md:text-6xl font-black mb-6">
-                Ready to <span className="gradient-text">Transform</span> Your Life?
-              </h2>
-              <p className="text-gray-400 text-xl mb-8 max-w-2xl mx-auto">
-                Join the waitlist for the most significant human-computer interface since the smartphone.
-              </p>
-              
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="flex-1 px-6 py-4 rounded-xl bg-white/5 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-[#00f0ff] transition-colors"
-                  required
-                />
-                <button type="submit" className={`btn-primary whitespace-nowrap ${submitted ? 'bg-green-500' : ''}`}>
-                  {submitted ? '✓ Joined!' : 'Join Waitlist'}
-                </button>
-              </form>
-            </div>
-            
-            <div className="glass rounded-3xl p-8 border border-white/10">
-              <div className="text-6xl mb-6">🪑</div>
-              <h3 className="font-orbitron text-2xl font-bold mb-4">
-                It's Time to <span className="text-[#ff00ff]">Evolve</span>
-              </h3>
-              <p className="text-gray-400 max-w-xl mx-auto mb-8">
-                The Matrix isn't about escaping reality. It's about <span className="text-white">augmenting</span> your ability 
-                to <span className="text-[#00f0ff]">create, build, and achieve</span>.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <button className="btn-primary text-lg px-10 py-4">Pre-Order for $4,999</button>
-                <button className="btn-secondary text-lg px-10 py-4">Schedule Demo</button>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-    
-    // ============ FOOTER ============
-    function Footer() {
-      return (
-        <footer className="border-t border-white/10 py-12 px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00f0ff] to-[#ff00ff] flex items-center justify-center">
-                  <span className="font-orbitron font-bold text-black text-lg">C</span>
-                </div>
-                <span className="font-orbitron text-xl font-bold tracking-wider">
-                  CLAW<span className="text-[#00f0ff]">CHAIR</span>
-                </span>
-              </div>
-              
-              <div className="flex gap-8 text-sm text-gray-500">
-                <a href="#features" className="hover:text-white transition-colors">Features</a>
-                <a href="#specs" className="hover:text-white transition-colors">Specs</a>
-                <a href="#ai" className="hover:text-white transition-colors">AI</a>
-                <a href="#order" className="hover:text-white transition-colors">Order</a>
-              </div>
-            </div>
-            
-            <div className="pt-8 mt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-gray-500 text-sm">© 2026 ClawChair Inc. All rights reserved.</p>
-              <p className="text-gray-500 text-sm">Powered by OpenClaw 🐰</p>
-            </div>
-          </div>
-        </footer>
-      );
-    }
-    
-    // ============ APP ============
-    function App() {
-      return (
-        <div className="min-h-screen bg-[#0a0a0f] bg-grid">
-          <Chair3D />
-          <Navbar />
-          <main>
-            <Hero />
-            <Features />
-            <Specs />
-            <AIIntegration />
-            <CTA />
-          </main>
-          <Footer />
         </div>
-      );
-    }
-    
-    // Render
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+        <div class="hero-image">
+          <img src="clawchair_product.jpg" alt="ClawChair - Futuristic Massage Chair Workstation" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Features</div>
+        <h2>Why Choose ClawChair?</h2>
+        <p>It's not just a chair. It's a complete life transformation.</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🖥️</div>
+          <h3>Triple Display System</h3>
+          <p>Three high-resolution screens for immersive multitasking. Monitor your AI agents, code, and entertainment simultaneously.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>AI-Native Platform</h3>
+          <p>OpenClaw pre-installed. Run local LLMs and orchestrate agents. Your personal AI army, always online.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💆</div>
+          <h3>Medical-Grade Massage</h3>
+          <p>Professional shiatsu, deep tissue, and AI-adaptive massage. The chair knows your stress levels.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Self-Powered Mobility</h3>
+          <p>Quiet electric drive. Move between rooms without leaving. Climate control keeps you comfortable.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌙</div>
+          <h3>Sleep Optimization</h3>
+          <p>Flat-bed conversion with temperature control, aromatherapy, and white noise. Wake refreshed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Fort Knox Security</h3>
+          <p>Hardware encryption, biometric lock, and air-gapped AI processing. Your digital life stays yours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFESTYLE -->
+  <section class="lifestyle">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Experience</div>
+        <h2>Your Entire Life, In One Chair</h2>
+        <p>Work, relax, create, and conquer — never leave your seat.</p>
+      </div>
+      <img src="clawchair_lifestyle.jpg" alt="ClawChair Lifestyle - Work from anywhere" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section class="specs" id="specs">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Specifications</div>
+        <h2>Beast Mode Unleashed</h2>
+        <p>Enterprise-grade hardware. Medical-level comfort.</p>
+      </div>
+      
+      <div class="specs-grid">
+        <div class="spec-card">
+          <h4>Computing</h4>
+          <div class="spec-item"><span>CPU</span><span>AMD Ryzen 9 9950X</span></div>
+          <div class="spec-item"><span>GPU</span><span>NVIDIA RTX 5090</span></div>
+          <div class="spec-item"><span>RAM</span><span>256GB DDR6</span></div>
+          <div class="spec-item"><span>Storage</span><span>8TB NVMe Gen5</span></div>
+        </div>
+        <div class="spec-card">
+          <h4>Display</h4>
+          <div class="spec-item"><span>Main</span><span>32" 8K OLED</span></div>
+          <div class="spec-item"><span>Sides</span><span>2x 15" Touch</span></div>
+          <div class="spec-item"><span>Refresh</span><span>240Hz</span></div>
+        </div>
+        <div class="spec-card">
+          <h4>Massage</h4>
+          <div class="spec-item"><span>Rollers</span><span>4D Shiatsu</span></div>
+          <div class="spec-item"><span>Airbags</span><span>36 Cells</span></div>
+          <div class="spec-item"><span>Programs</span><span>50+ Auto</span></div>
+        </div>
+        <div class="spec-card">
+          <h4>Comfort</h4>
+          <div class="spec-item"><span>Seating</span><span>Memory Foam</span></div>
+          <div class="spec-item"><span>Climate</span><span>Heat/Cool</span></div>
+          <div class="spec-item"><span>Audio</span><span>8.1 Spatial</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-card">
+        <div class="price-label">Starting From</div>
+        <div class="price-value">$4,999</div>
+        <div class="price-old">$7,999</div>
+        
+        <div class="price-features">
+          <div class="price-feature">Free Lifetime AI Updates</div>
+          <div class="price-feature">2 Year Warranty</div>
+          <div class="price-feature">30-Day Trial</div>
+          <div class="price-feature">Global Shipping</div>
+        </div>
+        
+        <a href="#order" class="btn-primary">Pre-Order Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="order">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Get Started</div>
+        <h2>Ready to Transform?</h2>
+        <p>Join the waitlist for the most significant human-computer interface since the smartphone.</p>
+      </div>
+      
+      <form class="cta-form" id="waitlist-form">
+        <input type="email" placeholder="Enter your email" required id="email-input" />
+        <button type="submit" class="btn-primary">Join Waitlist</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon">C</div>
+        <span class="logo-text">CLAW<span>CHAIR</span></span>
+      </div>
+      <p>© 2026 ClawChair Inc. Powered by OpenClaw 🐰</p>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Form handling
+    document.getElementById('waitlist-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = document.getElementById('email-input');
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ Joined!';
+      btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+      input.value = '';
+      setTimeout(() => {
+        btn.textContent = 'Join Waitlist';
+        btn.style.background = '';
+      }, 3000);
+    });
   </script>
 </body>
 </html>
